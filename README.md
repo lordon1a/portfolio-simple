@@ -1,4 +1,4 @@
-# Yiğit Güldal Portfolio
+#  Portfolio
 
 Personal portfolio website built with Next.js, featuring an interactive terminal, blog, and dynamic GitHub project integration.
 
