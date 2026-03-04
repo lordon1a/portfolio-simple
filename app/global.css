@@ -1,0 +1,268 @@
+@import 'tailwindcss';
+
+::selection {
+  background-color: #fbbf24;
+  color: #1a1d23;
+}
+
+:root {
+  --sh-class: #4c97f8;
+  --sh-identifier: #e5e7eb;
+  --sh-keyword: #f87171;
+  --sh-string: #34d399;
+  --sh-comment: #6b7280;
+  --sh-jsxliterals: #818cf8;
+  --sh-property: #fb923c;
+  --sh-entity: #fb923c;
+  --bg-primary: #1a1d23;
+  --bg-secondary: #252930;
+}
+
+html {
+  min-width: 360px;
+  background-color: var(--bg-primary);
+  color-scheme: dark;
+  font-feature-settings: 'rlig' 1, 'calt' 1;
+  text-rendering: optimizeLegibility;
+}
+
+/* Terminal-like cursor animations */
+.blink {
+  animation: blink-animation 1s steps(2, start) infinite;
+}
+
+@keyframes blink-animation {
+  to {
+    visibility: hidden;
+  }
+}
+
+.prose .anchor {
+  @apply absolute invisible no-underline;
+
+  margin-left: -1em;
+  padding-right: 0.5em;
+  width: 80%;
+  max-width: 700px;
+  cursor: pointer;
+}
+
+.anchor:hover {
+  @apply visible;
+}
+
+.prose a {
+  @apply underline transition-all decoration-gray-500 underline-offset-2 decoration-[0.1em];
+}
+
+.prose .anchor:after {
+  @apply text-gray-600;
+  content: '#';
+}
+
+.prose *:hover > .anchor {
+  @apply visible;
+}
+
+.prose pre {
+  background-color: var(--bg-secondary);
+  @apply rounded-lg overflow-x-auto border border-gray-800 py-2 px-3 text-sm;
+}
+
+.prose code {
+  @apply px-1 py-0.5 rounded-lg;
+}
+
+.prose pre code {
+  @apply p-0;
+  border: initial;
+  line-height: 1.5;
+}
+
+.prose code span {
+  @apply font-medium;
+}
+
+.prose img {
+  /* Don't apply styles to next/image */
+  @apply m-0;
+}
+
+.prose p {
+  @apply my-4 text-gray-400 text-sm;
+}
+
+.prose h1 {
+  @apply text-2xl font-bold tracking-tight mt-8 mb-4 text-gray-100;
+}
+
+.prose h2 {
+  @apply text-xl font-bold tracking-tight mt-8 mb-3 text-gray-100;
+}
+
+.prose h3 {
+  @apply text-lg font-bold tracking-tight mt-6 mb-3 text-gray-100;
+}
+
+.prose h4 {
+  @apply text-base font-bold tracking-tight mt-6 mb-2 text-gray-100;
+}
+
+.prose strong {
+  @apply font-medium text-gray-100;
+}
+
+.prose ul {
+  @apply list-disc pl-6 text-gray-300 text-sm;
+}
+
+.prose ol {
+  @apply list-decimal pl-6 text-gray-300 text-sm;
+}
+
+.prose > :first-child {
+  /* Override removing top margin, causing layout shift */
+  margin-top: 1.25em !important;
+  margin-bottom: 1.25em !important;
+}
+
+pre::-webkit-scrollbar {
+  display: none;
+}
+
+pre {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* Remove Safari input shadow on mobile */
+input[type='text'],
+input[type='email'] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+table {
+  display: block;
+  max-width: fit-content;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.title {
+  text-wrap: balance;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #374151;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #4b5563;
+}
+
+
+/* Light mode styles */
+html.light {
+  background-color: #ffffff;
+  color-scheme: light;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f9fafb;
+}
+
+html.light body {
+  background-color: #ffffff;
+  color: #1f2937;
+}
+
+html.light section {
+  background-color: #ffffff !important;
+}
+
+html.light h1,
+html.light h2,
+html.light h3 {
+  color: #111827 !important;
+}
+
+html.light p,
+html.light span {
+  color: #4b5563 !important;
+}
+
+html.light .text-gray-100 {
+  color: #111827 !important;
+}
+
+html.light .text-gray-200 {
+  color: #1f2937 !important;
+}
+
+html.light .text-gray-300 {
+  color: #374151 !important;
+}
+
+html.light .text-gray-400 {
+  color: #6b7280 !important;
+}
+
+html.light .text-gray-500 {
+  color: #9ca3af !important;
+}
+
+html.light .bg-gray-800 {
+  background-color: #f3f4f6 !important;
+}
+
+html.light .bg-gray-700 {
+  background-color: #e5e7eb !important;
+}
+
+html.light .border-gray-700 {
+  border-color: #e5e7eb !important;
+}
+
+html.light .border-gray-800 {
+  border-color: #d1d5db !important;
+}
+
+html.light .hover\:bg-gray-700:hover {
+  background-color: #e5e7eb !important;
+}
+
+html.light .hover\:text-gray-200:hover {
+  color: #1f2937 !important;
+}
+
+html.light ::-webkit-scrollbar-track {
+  background: #f3f4f6;
+}
+
+html.light ::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+}
+
+html.light ::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+/* Custom background colors */
+.bg-primary {
+  background-color: var(--bg-primary);
+}
+
+.bg-secondary {
+  background-color: var(--bg-secondary);
+}
