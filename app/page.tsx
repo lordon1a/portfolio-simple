@@ -71,10 +71,10 @@ export default function Page() {
     <section className="bg-primary min-h-screen -mt-6 -mx-2 md:-mx-0 px-2 md:px-0 flex flex-col">
       <div className="max-w-2xl mx-auto pt-12 flex-1 flex flex-col w-full">
         {/* Header */}
-        <div className="mb-12 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <div className="space-y-1">
-            <h1 className="text-3xl font-semibold tracking-tight text-gray-100">Yiğit Güldal</h1>
-            <p className="text-base text-gray-400">Software Developer</p>
+        <div className="mb-10 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+          <div className="space-y-1.5">
+            <h1 className="text-[2.1rem] leading-tight font-semibold tracking-tight text-gray-100">Yiğit Güldal</h1>
+            <p className="text-sm tracking-wide text-gray-400">Software Developer</p>
           </div>
           <div className="flex items-center gap-3 self-start sm:self-auto">
             <button
@@ -106,15 +106,15 @@ export default function Page() {
 
         {/* Tabs */}
         <nav className="mb-8 border-b border-gray-700">
-          <div className="flex flex-wrap gap-6 pb-4">
+          <div className="flex flex-wrap items-end gap-x-6 gap-y-2">
             {tabs.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
                 className={`cursor-pointer transition-all text-sm capitalize ${
                   activeTab === tab.id
-                    ? 'text-gray-100 border-b-2 border-gray-100 pb-1'
-                    : 'text-gray-400 hover:text-gray-200'
+                    ? 'text-gray-100 border-b-2 border-gray-100 pb-3 -mb-px'
+                    : 'text-gray-400 hover:text-gray-200 border-b-2 border-transparent pb-3 -mb-px'
                 }`}
               >
                 {tab.label}
