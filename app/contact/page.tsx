@@ -1,5 +1,4 @@
 
-
 import { Mail, Calendar, Github, Linkedin } from 'lucide-react'
 
 export const dynamic = 'force-static'
@@ -39,7 +38,14 @@ export default function ContactPage() {
             </p>
             <p className="flex items-center">
               <Linkedin className="h-3 w-3 text-amber-400 mr-1.5 flex-shrink-0" />
-              <span className="text-gray-300 text-xs">linkedin/yigit-guldal</span>
+              <a
+                href="https://www.linkedin.com/in/yigit-guldal"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-300 text-xs hover:text-amber-400 transition-colors"
+              >
+                linkedin/yigit-guldal
+              </a>
             </p>
             <p className="flex items-center">
               <Calendar className="h-3 w-3 text-amber-400 mr-1.5 flex-shrink-0" />

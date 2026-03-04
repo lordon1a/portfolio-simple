@@ -2,8 +2,6 @@ import './global.css'
 import type { Metadata } from 'next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { Analytics } from '@vercel/analytics/react'
-import { Navbar } from './components/nav'
-import Footer from './components/footer'
 import { baseUrl } from './sitemap'
 
 export const metadata: Metadata = {
@@ -13,6 +11,9 @@ export const metadata: Metadata = {
     template: '%s | Yiğit Güldal',
   },
   description: 'Personal portfolio of Yiğit Güldal, software developer.',
+  alternates: {
+    canonical: baseUrl,
+  },
   openGraph: {
     title: 'Yiğit Güldal',
     description: 'Personal portfolio of Yiğit Güldal, software developer.',
@@ -33,8 +34,6 @@ export const metadata: Metadata = {
     },
   },
 }
-
-const cx = (...classes) => classes.filter(Boolean).join(' ')
 
 export default function RootLayout({
   children,

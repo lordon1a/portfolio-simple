@@ -15,29 +15,7 @@ interface GitHubRepo {
 
 export default function ProjectsPage() {
   const [githubRepos, setGithubRepos] = useState<GitHubRepo[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [viewMode, setViewMode] = useState<"grid" | "list">("list");
-  const [sortOrder, setSortOrder] = useState<"stars" | "recent">("stars");
-
-  useEffect(() => {
-    const fetchRepos = async () => {
-      try {
-        const response = await fetch('/api/github-stars');
-        if (!response.ok) throw new Error('Failed to fetch repositories');
-        const data = await response.json();
-        setGithubRepos(data);
-      } catch (error) {
-        console.error('Error fetching repositories:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchRepos();
-  }, []);
-
-  // Manual project list intentionally left empty
-  const projects: Array<{
+  const [manualProjects, setManualProjects] = useState<Array<{
     id: string;
     title: string;
     year: string;
@@ -45,7 +23,42 @@ export default function ProjectsPage() {
     tags: string[];
     github?: string;
     link?: string;
-  }> = [];
+    stars?: number;
+  }>>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [viewMode, setViewMode] = useState<"grid" | "list">("list");
+  const [sortOrder, setSortOrder] = useState<"stars" | "recent">("stars");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [starsResult, projectsResult] = await Promise.allSettled([
+          fetch('/api/github-stars').then((response) => {
+            if (!response.ok) throw new Error('Failed to fetch repositories')
+            return response.json()
+          }),
+          fetch('/api/projects').then((response) => {
+            if (!response.ok) throw new Error('Failed to fetch projects')
+            return response.json()
+          }),
+        ])
+
+        if (starsResult.status === 'fulfilled') {
+          setGithubRepos(starsResult.value)
+        }
+
+        if (projectsResult.status === 'fulfilled') {
+          setManualProjects(projectsResult.value)
+        }
+      } catch (error) {
+        console.error('Error fetching repositories:', error)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchData()
+  }, [])
 
   // Get GitHub data for a project
   const getGitHubData = (projectGithub: string | undefined) => {
@@ -54,13 +67,14 @@ export default function ProjectsPage() {
     return githubRepos.find(repo => repo.fullName === repoName);
   };
 
-  // Combine manual projects with GitHub repos
-  const allProjects = [...projects];
+  const allProjects = [...manualProjects];
   
   // Add GitHub repos that are not already in the projects list
   if (!isLoading) {
     githubRepos.forEach(repo => {
-      const alreadyExists = projects.some(p => p.github && p.github.toLowerCase().includes(repo.fullName));
+      const alreadyExists = manualProjects.some(
+        p => p.github && p.github.toLowerCase().includes(repo.fullName)
+      );
       if (!alreadyExists) {
         allProjects.push({
           id: repo.fullName.split('/')[1],
@@ -134,6 +148,10 @@ export default function ProjectsPage() {
       {isLoading ? (
         <div className="text-center py-8">
           <p className="text-gray-400">loading repositories...</p>
+        </div>
+      ) : sortedProjects.length === 0 ? (
+        <div className="text-center py-8">
+          <p className="text-gray-400">no projects found yet.</p>
         </div>
       ) : (
         <>

@@ -1,35 +1,28 @@
 [
   {
     "id": "cursor-free-fix",
-    "title": "cursor-free-fix",
+    "title": "Cursor Free Fix",
     "year": "2026",
     "stars": 29,
-    "description": "Cursor fix for: \"You've reached your trial request limit. / Too many free trial accounts used on this machine.\" errors.",
+    "description": "CLI utility to reset common Cursor free-trial machine limits and restore development workflow quickly.",
     "tags": [
-      "Shell"
+      "Shell",
+      "CLI",
+      "Automation"
     ],
     "github": "https://github.com/lordon1a/cursor-free-fix"
   },
   {
-    "id": "1772620507714",
-    "title": "aaa",
+    "id": "portfolio-simple",
+    "title": "Portfolio Simple",
     "year": "2026",
-    "stars": 142334,
-    "description": "aaaa",
+    "stars": 0,
+    "description": "Personal portfolio built with Next.js App Router, dynamic content APIs, and admin management pages.",
     "tags": [
-      "react"
+      "Next.js",
+      "TypeScript",
+      "Tailwind"
     ],
-    "github": "https://github.com/lordon1a/cursor-free-fix"
-  },
-  {
-    "id": "1772621621609",
-    "title": "aaadsadasdas",
-    "year": "2026",
-    "stars": 1111,
-    "description": "aaa",
-    "tags": [
-      "aaa"
-    ],
-    "github": "https://github.com/lordon1a/cursor-free-fix"
+    "github": "https://github.com/lordon1a/portfolio-simple"
   }
 ]

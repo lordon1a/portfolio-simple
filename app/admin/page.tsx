@@ -14,8 +14,11 @@ export default function AdminPage() {
   const [activeTab, setActiveTab] = useState<ContentType>('projects')
   const [items, setItems] = useState<BaseItem[]>([])
   const [isLoading, setIsLoading] = useState(true)
+  const [isSaving, setIsSaving] = useState(false)
   const [editingItem, setEditingItem] = useState<BaseItem | null>(null)
   const [isAdding, setIsAdding] = useState(false)
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
+  const [successMessage, setSuccessMessage] = useState<string | null>(null)
 
   const tabs: { id: ContentType; label: string }[] = [
     { id: 'projects', label: 'Projects' },
@@ -31,18 +34,27 @@ export default function AdminPage() {
 
   const fetchItems = async () => {
     setIsLoading(true)
+    setErrorMessage(null)
     try {
       const response = await fetch(`/api/${activeTab}`)
+      if (!response.ok) {
+        throw new Error(`Failed to fetch ${activeTab}`)
+      }
       const data = await response.json()
-      setItems(data)
+      setItems(Array.isArray(data) ? data : [])
     } catch (error) {
       console.error('Failed to fetch items:', error)
+      setItems([])
+      setErrorMessage(`Could not load ${activeTab}. Please refresh and try again.`)
     } finally {
       setIsLoading(false)
     }
   }
 
   const handleSave = async (item: BaseItem) => {
+    setIsSaving(true)
+    setErrorMessage(null)
+    setSuccessMessage(null)
     try {
       const response = await fetch(`/api/${activeTab}`, {
         method: isAdding ? 'POST' : 'PUT',
@@ -50,19 +62,29 @@ export default function AdminPage() {
         body: JSON.stringify(item),
       })
 
+      const result = await response.json().catch(() => null)
+
       if (response.ok) {
         await fetchItems()
         setEditingItem(null)
         setIsAdding(false)
+        setSuccessMessage(isAdding ? 'Item added successfully.' : 'Item updated successfully.')
+      } else {
+        setErrorMessage(result?.error || 'Failed to save item.')
       }
     } catch (error) {
       console.error('Failed to save item:', error)
+      setErrorMessage('Failed to save item. Please try again.')
+    } finally {
+      setIsSaving(false)
     }
   }
 
   const handleDelete = async (id: string) => {
     if (!confirm('Are you sure you want to delete this item?')) return
 
+    setErrorMessage(null)
+    setSuccessMessage(null)
     try {
       const response = await fetch(`/api/${activeTab}`, {
         method: 'DELETE',
@@ -70,11 +92,17 @@ export default function AdminPage() {
         body: JSON.stringify({ id }),
       })
 
+      const result = await response.json().catch(() => null)
+
       if (response.ok) {
         await fetchItems()
+        setSuccessMessage('Item deleted successfully.')
+      } else {
+        setErrorMessage(result?.error || 'Failed to delete item.')
       }
     } catch (error) {
       console.error('Failed to delete item:', error)
+      setErrorMessage('Failed to delete item. Please try again.')
     }
   }
 
@@ -181,6 +209,8 @@ export default function AdminPage() {
                   setActiveTab(tab.id)
                   setEditingItem(null)
                   setIsAdding(false)
+                  setErrorMessage(null)
+                  setSuccessMessage(null)
                 }}
                 className={`pb-3 px-2 transition-all ${
                   activeTab === tab.id
@@ -198,12 +228,26 @@ export default function AdminPage() {
           <DynamicForm
             item={editingItem!}
             contentType={activeTab}
+            isAdding={isAdding}
+            isSaving={isSaving}
             onSave={handleSave}
             onCancel={() => {
               setEditingItem(null)
               setIsAdding(false)
             }}
           />
+        )}
+
+        {errorMessage && (
+          <div className="mb-6 rounded border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-300">
+            {errorMessage}
+          </div>
+        )}
+
+        {successMessage && (
+          <div className="mb-6 rounded border border-emerald-500/30 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-300">
+            {successMessage}
+          </div>
         )}
 
         <div className="grid grid-cols-1 gap-4">
@@ -279,11 +323,15 @@ function ItemCard({
 function DynamicForm({
   item,
   contentType,
+  isAdding,
+  isSaving,
   onSave,
   onCancel,
 }: {
   item: BaseItem
   contentType: ContentType
+  isAdding: boolean
+  isSaving: boolean
   onSave: (item: BaseItem) => void
   onCancel: () => void
 }) {
@@ -304,7 +352,7 @@ function DynamicForm({
       className="bg-secondary p-6 rounded-lg border border-gray-800 mb-6"
     >
       <h2 className="text-xl font-semibold text-gray-100 mb-4">
-        {item.id ? 'Edit Item' : 'Add New Item'}
+        {isAdding ? 'Add New Item' : 'Edit Item'}
       </h2>
 
       <div className="space-y-4">
@@ -332,15 +380,25 @@ function DynamicForm({
                 <input
                   type="number"
                   value={value}
-                  onChange={(e) => updateField(key, parseInt(e.target.value))}
+                  onChange={(e) => {
+                    const nextValue = Number(e.target.value)
+                    updateField(key, Number.isNaN(nextValue) ? 0 : nextValue)
+                  }}
                   className="w-full bg-gray-800 text-gray-100 px-3 py-2 rounded border border-gray-700 focus:border-amber-500 outline-none"
                 />
-              ) : (
+              ) : key.toLowerCase().includes('description') ? (
                 <textarea
                   value={value}
                   onChange={(e) => updateField(key, e.target.value)}
                   className="w-full bg-gray-800 text-gray-100 px-3 py-2 rounded border border-gray-700 focus:border-amber-500 outline-none"
                   rows={3}
+                />
+              ) : (
+                <input
+                  type="text"
+                  value={value}
+                  onChange={(e) => updateField(key, e.target.value)}
+                  className="w-full bg-gray-800 text-gray-100 px-3 py-2 rounded border border-gray-700 focus:border-amber-500 outline-none"
                 />
               )}
             </div>
@@ -350,14 +408,16 @@ function DynamicForm({
       <div className="flex gap-3 mt-6">
         <button
           type="submit"
+          disabled={isSaving}
           className="flex items-center gap-2 bg-amber-500 text-gray-900 px-4 py-2 rounded hover:bg-amber-400 transition-colors"
         >
           <Save className="w-4 h-4" />
-          Save
+          {isSaving ? 'Saving...' : 'Save'}
         </button>
         <button
           type="button"
           onClick={onCancel}
+          disabled={isSaving}
           className="flex items-center gap-2 bg-gray-700 text-gray-300 px-4 py-2 rounded hover:bg-gray-600 transition-colors"
         >
           <X className="w-4 h-4" />

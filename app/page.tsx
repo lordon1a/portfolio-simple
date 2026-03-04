@@ -1,9 +1,7 @@
 "use client"
 
 import { useState, useEffect } from 'react'
-import { BlogPosts } from 'app/components/posts'
-import Link from 'next/link'
-import { Github, Star, Link as LinkIcon } from 'lucide-react'
+import { Github, Star, Mail, Linkedin } from 'lucide-react'
 
 const activeContributions = [
   { name: 'OpenCode', stars: '105k★', url: 'https://github.com/sst/opencode' },
@@ -186,7 +184,7 @@ export default function Page() {
 
         {/* Footer */}
         <footer className="mt-16 mb-10 pt-8 border-t border-gray-700">
-          <div className="flex items-center justify-between text-sm text-gray-400">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between text-sm text-gray-400">
             <p>© 2025 yigit guldal</p>
             <div className="flex items-center gap-4">
               <a 
@@ -248,6 +246,18 @@ function AboutContent() {
           </div>
         </div>
       </div>
+
+      <div>
+        <h2 className="text-xs font-semibold uppercase tracking-[0.18em] text-gray-500 mb-4">
+          Writing
+        </h2>
+        <a
+          href="/blog"
+          className="inline-flex items-center rounded-md border border-gray-700 px-3 py-2 text-sm text-gray-300 transition-colors hover:border-gray-500 hover:text-gray-100"
+        >
+          Read blog posts
+        </a>
+      </div>
     </div>
   )
 }
@@ -259,50 +269,56 @@ function ProjectsContent({ projects }: { projects: any[] }) {
         <h2 className="text-lg font-semibold text-gray-100">Projects</h2>
       </div>
 
-      <div className="grid grid-cols-1 gap-3">
-        {projects.map((project) => (
-          <div
-            key={project.id}
-            className="bg-secondary p-3 rounded-md border border-gray-800 hover:border-gray-700 transition-all"
-          >
-            <div className="flex justify-between items-start mb-1">
-              <h3 className="font-medium text-gray-300 text-sm">{project.title}</h3>
-              <div className="flex items-center gap-2">
-                <span className="flex items-center text-xs bg-gray-800 text-amber-400 px-2 py-0.5 rounded">
-                  <Star className="h-3 w-3 mr-1" />
-                  {project.stars}
-                </span>
-                <span className="text-xs bg-gray-800 text-gray-400 px-2 py-0.5 rounded">
-                  {project.year}
-                </span>
-              </div>
-            </div>
-            <p className="text-gray-400 text-xs mb-2 leading-relaxed">
-              {project.description}
-            </p>
-            <div className="flex justify-between items-center">
-              <div className="flex flex-wrap gap-1.5">
-                {project.tags.map((tag: string) => (
-                  <span
-                    key={tag}
-                    className="text-xs bg-gray-800 text-gray-400 px-2 py-0.5 rounded"
-                  >
-                    {tag}
+      {projects.length === 0 ? (
+        <p className="text-gray-400">No projects found yet.</p>
+      ) : (
+        <div className="grid grid-cols-1 gap-3">
+          {projects.map((project) => (
+            <div
+              key={project.id}
+              className="bg-secondary p-3 rounded-md border border-gray-800 hover:border-gray-700 transition-all"
+            >
+              <div className="flex justify-between items-start mb-1">
+                <h3 className="font-medium text-gray-300 text-sm">{project.title}</h3>
+                <div className="flex items-center gap-2">
+                  <span className="flex items-center text-xs bg-gray-800 text-amber-400 px-2 py-0.5 rounded">
+                    <Star className="h-3 w-3 mr-1" />
+                    {project.stars || 0}
                   </span>
-                ))}
+                  <span className="text-xs bg-gray-800 text-gray-400 px-2 py-0.5 rounded">
+                    {project.year || '-'}
+                  </span>
+                </div>
               </div>
-              <a
-                href={project.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-amber-400 hover:text-amber-300"
-              >
-                <Github className="h-4 w-4" />
-              </a>
+              <p className="text-gray-400 text-xs mb-2 leading-relaxed">
+                {project.description || 'No description available.'}
+              </p>
+              <div className="flex justify-between items-center gap-3">
+                <div className="flex flex-wrap gap-1.5">
+                  {(project.tags || []).map((tag: string) => (
+                    <span
+                      key={tag}
+                      className="text-xs bg-gray-800 text-gray-400 px-2 py-0.5 rounded"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+                {project.github && (
+                  <a
+                    href={project.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-amber-400 hover:text-amber-300"
+                  >
+                    <Github className="h-4 w-4" />
+                  </a>
+                )}
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   )
 }
@@ -446,7 +462,41 @@ function ContactContent() {
   return (
     <div>
       <h2 className="text-lg font-semibold text-gray-100 mb-6">Contact</h2>
-      <p className="text-gray-400">Contact content coming soon...</p>
+      <div className="space-y-4">
+        <p className="text-gray-400 text-sm">
+          Available for freelance work, collaborations, and product-focused engineering roles.
+        </p>
+
+        <div className="space-y-3">
+          <a
+            href="mailto:yigitguldal@gmail.com"
+            className="flex items-center gap-2 text-gray-300 hover:text-gray-100 transition-colors"
+          >
+            <Mail className="h-4 w-4" />
+            yigitguldal@gmail.com
+          </a>
+
+          <a
+            href="https://github.com/lordon1a"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 text-gray-300 hover:text-gray-100 transition-colors"
+          >
+            <Github className="h-4 w-4" />
+            github.com/lordon1a
+          </a>
+
+          <a
+            href="https://www.linkedin.com/in/yigit-guldal"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 text-gray-300 hover:text-gray-100 transition-colors"
+          >
+            <Linkedin className="h-4 w-4" />
+            linkedin.com/in/yigit-guldal
+          </a>
+        </div>
+      </div>
     </div>
   )
 }

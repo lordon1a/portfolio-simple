@@ -1,6 +1,6 @@
 import { getBlogPosts } from "app/blog/utils";
 
-export const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+export const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://guldal.me";
 
 export default async function sitemap() {
   let blogs = getBlogPosts().map((post) => ({
@@ -8,7 +8,16 @@ export default async function sitemap() {
     lastModified: post.metadata.publishedAt,
   }));
 
-  let routes = ["", "/blog"].map((route) => ({
+  let routes = [
+    "",
+    "/blog",
+    "/projects",
+    "/experience",
+    "/education",
+    "/achievements",
+    "/skills",
+    "/contact",
+  ].map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date().toISOString().split("T")[0],
   }));
