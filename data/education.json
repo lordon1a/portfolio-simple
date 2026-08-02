@@ -1,1 +1,11 @@
-[]
+[
+  {
+    "id": "edu-1",
+    "degree": "Bachelor's Degree",
+    "field": "Economics (İktisat)",
+    "school": "University",
+    "startDate": "2022",
+    "endDate": "Present",
+    "description": "Studying Economics while actively developing modern SaaS and software solutions as a self-taught developer."
+  }
+]

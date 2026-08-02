@@ -1,5 +1,20 @@
 [
   {
+    "id": "saas-crm-future",
+    "title": "SaaS CRM Future",
+    "year": "2024",
+    "stars": 0,
+    "description": "A highly scalable, real-time, and AI-powered CRM SaaS platform built with Flask. Features include real-time collaboration with Socket.IO, automated workflows, and native integrations with Anthropic, Groq, Google Workspace, and QuickBooks.",
+    "tags": [
+      "Python",
+      "Flask",
+      "PostgreSQL",
+      "Socket.IO",
+      "AI (Anthropic/Groq)"
+    ],
+    "github": "https://github.com/lordon1a/saas-crm-future"
+  },
+  {
     "id": "cursor-free-fix",
     "title": "Cursor Free Fix",
     "year": "2026",

@@ -3,25 +3,6 @@
 import { useState, useEffect } from 'react'
 import { Github, Star, Mail, Linkedin } from 'lucide-react'
 
-const activeContributions = [
-  { name: 'OpenCode', stars: '105k★', url: 'https://github.com/sst/opencode' },
-  { name: 'Claude Code', stars: '67k★', url: 'https://github.com/anthropics/claude-code' },
-  { name: 'Claude Cookbooks', stars: '33k★', url: 'https://github.com/anthropics/claude-cookbooks' },
-  { name: 'VERT', stars: '14k★', url: 'https://github.com/search?q=vert&type=repositories' },
-  { name: 'Cheating Daddy', stars: '5k★', url: 'https://github.com/search?q=cheating+daddy&type=repositories' },
-  { name: 'Claude Agent SDK', stars: '4.8k★', url: 'https://github.com/anthropics/claude-agent-sdk' },
-  { name: 'Anthropic SDK Python', stars: '2.8k★', url: 'https://github.com/anthropics/anthropic-sdk-python' },
-  { name: 'Anthropic SDK TS', stars: '1.6k★', url: 'https://github.com/anthropics/anthropic-sdk-typescript' },
-  { name: 'Baklava by Trendyol', stars: '1.4k★', url: 'https://github.com/Trendyol/baklava' },
-  { name: 'Anthropic SDK Go', stars: '797★', url: 'https://github.com/anthropics/anthropic-sdk-go' },
-  { name: 'Kip', stars: '768★', url: 'https://github.com/charmbracelet/kip' },
-  { name: 'Groq SDK TS', stars: '241★', url: 'https://github.com/groq/groq-typescript' },
-  { name: 'Anthropic SDK C#', stars: '152★', url: 'https://github.com/anthropics/anthropic-sdk-csharp' },
-  { name: 'Open Claude', stars: '138★', url: 'https://github.com/search?q=open+claude&type=repositories' },
-  { name: 'tredis', stars: '92★', url: 'https://github.com/search?q=tredis&type=repositories' },
-  { name: 'Anthropic SDK PHP', stars: '92★', url: 'https://github.com/anthropics/anthropic-sdk-php' },
-]
-
 export default function Page() {
   const [activeTab, setActiveTab] = useState('about')
   const [projects, setProjects] = useState([])
@@ -215,49 +196,13 @@ function AboutContent() {
     <div>
       <div className="mb-12">
         <p className="text-gray-300 mb-4 leading-relaxed">
-          I'm Yiğit — a software engineer who builds modern web applications with a focus on user experience and performance. I enjoy turning complex problems into simple, beautiful, and intuitive solutions.
+          I'm Yiğit — an Economics student and passionate software developer who builds modern web applications. I enjoy turning complex problems into simple, beautiful, and scalable solutions.
         </p>
         <p className="text-gray-400 text-sm">
           Passionate about creating innovative solutions.
         </p>
       </div>
 
-      <div className="mb-12">
-        <h2 className="text-xs font-semibold uppercase tracking-[0.18em] text-gray-500 mb-6">
-          Open Source & Volunteering
-        </h2>
-        <div className="space-y-6">
-          <div>
-            <h3 className="font-medium text-gray-200 mb-3">Active Open Source Contributor</h3>
-            <div className="flex flex-wrap gap-2">
-              {activeContributions.map((repo) => (
-                <a
-                  key={repo.name}
-                  href={repo.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 rounded-md border border-gray-700 bg-secondary px-3 py-1 text-sm text-gray-300 transition-colors hover:border-gray-500 hover:text-gray-100"
-                >
-                  <span>{repo.name}</span>
-                  <span className="text-xs text-gray-500">{repo.stars}</span>
-                </a>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div>
-        <h2 className="text-xs font-semibold uppercase tracking-[0.18em] text-gray-500 mb-4">
-          Writing
-        </h2>
-        <a
-          href="/blog"
-          className="inline-flex items-center rounded-md border border-gray-700 px-3 py-2 text-sm text-gray-300 transition-colors hover:border-gray-500 hover:text-gray-100"
-        >
-          Read blog posts
-        </a>
-      </div>
     </div>
   )
 }
@@ -487,13 +432,13 @@ function ContactContent() {
           </a>
 
           <a
-            href="https://www.linkedin.com/in/yigit-guldal"
+            href="https://www.linkedin.com/in/yi%C4%9Fit-g-57b659289/"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2 text-gray-300 hover:text-gray-100 transition-colors"
           >
             <Linkedin className="h-4 w-4" />
-            linkedin.com/in/yigit-guldal
+            linkedin.com/in/yiğit-g
           </a>
         </div>
       </div>

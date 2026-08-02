@@ -1,1 +1,44 @@
-[]
+[
+  {
+    "id": "python",
+    "name": "Python",
+    "category": "Backend",
+    "level": "Advanced"
+  },
+  {
+    "id": "flask",
+    "name": "Flask",
+    "category": "Backend",
+    "level": "Intermediate"
+  },
+  {
+    "id": "postgresql",
+    "name": "PostgreSQL",
+    "category": "Database",
+    "level": "Intermediate"
+  },
+  {
+    "id": "javascript",
+    "name": "JavaScript / TypeScript",
+    "category": "Frontend",
+    "level": "Intermediate"
+  },
+  {
+    "id": "react",
+    "name": "React / Next.js",
+    "category": "Frontend",
+    "level": "Intermediate"
+  },
+  {
+    "id": "ai-integration",
+    "name": "AI Integrations (Anthropic, Google, Groq)",
+    "category": "Other",
+    "level": "Intermediate"
+  },
+  {
+    "id": "socket-io",
+    "name": "Socket.IO",
+    "category": "Backend",
+    "level": "Intermediate"
+  }
+]
